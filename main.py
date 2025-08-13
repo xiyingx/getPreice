@@ -60,7 +60,7 @@ def fetch_data():
         # 3. 库存变动记录
         result_str.append("=== 库存变动记录 ===")
         trades = data['data'].get('trades', [])
-        trades = trades[-10:]
+        trades = trades[:20]
         if not trades:
             result_str.append("暂无变动记录")
         else:
