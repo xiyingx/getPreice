@@ -56,10 +56,11 @@ def fetch_data():
         result_str.append(f"Steam ID：{user_info.get('steam_id', '未知')}")
         result_str.append(f"资产数量：{user_info.get('asset_cnt', 0)}")
         result_str.append(f"最后更新时间：{user_info.get('updated_at', '未知')}\n")
-
+        
         # 3. 库存变动记录
         result_str.append("=== 库存变动记录 ===")
         trades = data['data'].get('trades', [])
+        trades = trades[0:5]
         if not trades:
             result_str.append("暂无变动记录")
         else:
