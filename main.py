@@ -5,14 +5,14 @@ import requests
 import json
 from datetime import datetime  # 用于生成带时间戳的文件名
 
-def fetch_data():
+def fetch_data(task_id:str):
     """发送请求获取数据，组织成字符串并保存为TXT文件"""
     try:
         # 请求参数
         payload = json.dumps({
             "page_index": 1,
             "page_size": 20,
-            "task_id": "3870"  # 替换为实际task_id
+            "task_id": task_id  # 替换为实际task_id
         })
         headers = {
             "ApiToken": "XJWEQ1P795V5P0S7X7Q9S844",  # 替换为实际令牌
@@ -100,14 +100,14 @@ class MyPlugin(Star):
     
     # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
     @filter.command("get")
-    async def helloworld(self, event: AstrMessageEvent):
+    async def helloworld(self, event: AstrMessageEvent,task_id:str):
         """这是一个 hello world 指令""" # 这是 handler 的描述，将会被解析方便用户了解插件内容。建议填写。
         user_name = event.get_sender_name()
         message_str = event.message_str # 用户发的纯文本消息字符串
         message_chain = event.get_messages() # 用户所发的消息的消息链 # from astrbot.api.message_components import *
         logger.info(message_chain)
         #查询库存
-        res = fetch_data()
+        res = fetch_data(task_id)
         yield event.plain_result(f"{res}") # 发送一条纯文本消息
 
     async def terminate(self):
